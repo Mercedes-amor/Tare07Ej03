@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <title>Tarea 6 - Mercedes Amor</title>
-  </head>
+  <!-- Header con fragmentación -->
+  <head th:insert="fragments/header :: header"></head>
+
+  <!-- Menu con fragmentación -->
+  <nav th:insert="fragments/header :: menu"></nav>
+
   <body class="container mt-5">
-    <h1 class="mb-4">Editar empleado</h1>
+    <h1 class="mb-4">Nuevo empleado</h1>
 
     <form
       method="post"
-      action="#"
-      th:action="@{/edit/submit}"
+      th:action="@{/add/submit}"
       th:object="${empleadoForm}"
       class="card p-4 shadow"
     >
-      <div class="mb-3">
-        <label for="id" class="form-label">Id:</label>
-        <input type="text" readonly id="id" th:field="*{id}" class="form-control" />
-      </div>
+      <!-- El id ya se autogenera, no debemos introducirlo -->
+      <!-- <div class="mb-3">
+            <label for="id" class="form-label">Id:</label>
+            <input type="text" id="id" th:field="*{id}" class="form-control" />
+        </div> -->
       <div class="mb-3">
         <label for="nombre" class="form-label">Nombre:</label>
         <input
@@ -31,6 +29,19 @@
           class="form-control"
         />
       </div>
+
+      <!-- DEPARTAMENTO -->
+      <div class="mb-3">
+        <label for="departamento">Departamento</label>
+        <select th:field="*{departamento}">
+          <option
+            th:each="departamento:${listaDepartamentos}"
+            th:value="${departamento.id}"
+            th:text="${departamento.nombre}"
+          ></option>
+        </select>
+      </div>
+
       <div class="mb-3">
         <label for="email" class="form-label">Email:</label>
         <input
@@ -43,7 +54,7 @@
       <div class="mb-3">
         <label for="salario" class="form-label">Salario:</label>
         <input
-          type="number"
+          type="text"
           id="salario"
           th:field="*{salario}"
           class="form-control"
@@ -76,10 +87,10 @@
       </div>
       <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
-    </br>
-    <div th:if="${text2Err != null}">
-      <p th:text="${text2Err}">Texto de error</p>
-  </div>
+    <br />
+    <div th:if="${textErr != null}" class="alert alert-warning" role="alert">
+      <p th:text="${textErr}">Texto de error</p>
+    </div>
     <a th:href="@{/}" class="btn btn-secondary ms-2">Inicio</a>
   </body>
 </html>

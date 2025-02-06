@@ -7,8 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,10 +17,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor 
 @EqualsAndHashCode(of = "id")
-@Entity //Declara que va a ser una entidad de la base de datos con nombre Empleado
-public class Empleado {
+@Entity //Declara que va a ser una entidad de la base de datos con nombre Departamento
+public class Departamento {
 
-    //@Id es obligatorio e indica que es la Primary Key de la entidad Empleado
+    //@Id es obligatorio e indica que es la Primary Key de la entidad Departamento
     //Obligatoriamente es not null y único
     //Podríamos haberlo puesto a dni, matrícula, códigoCliente, etc
     @Id
@@ -30,15 +28,5 @@ public class Empleado {
     private Long id;
     @NotNull
     private String nombre;
-    @NotNull
-    @Email
-    private String email;
-    @NotNull
-    private Float salario;
-    private Boolean enActivo;
-    @NotNull
-    private Genero genero;
-
-    @ManyToOne
-    private Departamento departamento;
+    
 }

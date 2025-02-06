@@ -2,8 +2,6 @@ package com.example.app.controllers;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +14,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.app.domain.Empleado;
 import com.example.app.domain.Genero;
+import com.example.app.services.DepartamentoService;
 import com.example.app.services.EmpleadoService;
+
+import jakarta.validation.Valid;
 
 @Controller
 
@@ -25,8 +26,11 @@ import com.example.app.services.EmpleadoService;
 
 public class EmpleadoController {
 
-    @Autowired
+    @Autowired(required = true)
     EmpleadoService empleadoService;
+
+    @Autowired
+    DepartamentoService departamentoService;
 
     // Variable global para almacenar los textos de error
     private String txtErr;
@@ -41,7 +45,7 @@ public class EmpleadoController {
         txtErr = null;
 
         model.addAttribute("listaEmpleados", empleadoService.obtenerTodos());
-        return "listView";
+        return "empleado/listView";
 
     }
 
@@ -56,7 +60,7 @@ public class EmpleadoController {
             txtErr = e.getMessage();
             return "redirect:/list?err=1";
         }
-        return "listOneView";
+        return "empleado/listOneView";
     }
 
     @GetMapping("/add")
@@ -78,9 +82,9 @@ public class EmpleadoController {
             txtErr = null;
 
         }
-
+        model.addAttribute("listaDepartamentos", departamentoService.obtenerTodos());
         model.addAttribute("empleadoForm", new Empleado());
-        return "newFormView";
+        return "empleado/newFormView";
     }
 
     @PostMapping("/add/submit")
@@ -120,8 +124,10 @@ public class EmpleadoController {
             txtErr = null;
         }
         Empleado empleado = empleadoService.obtenerPorId(id);
+
+        model.addAttribute("listaDepartamentos", departamentoService.obtenerTodos());
         model.addAttribute("empleadoForm", empleado);
-        return "editFormView";
+        return "empleado/editFormView";
     }
 
     @PostMapping("/edit/submit")
@@ -151,9 +157,24 @@ public class EmpleadoController {
 
     // BUSCADOR
 
+    @GetMapping("/bysalary/{salario}")
+    public String geBySalary(@PathVariable Float salario, Model model) {
+        List<Empleado> empleados = empleadoService.obtenerPorSalarioMayor(salario);
+        System.out.println("Consultando empleados con salario >= " + salario);
+        model.addAttribute("listaEmpleados", empleados);
+        return "empleado/listView";
+    }
+
+    @GetMapping("/maxid")
+    public String getMaxId(Model model) {
+        model.addAttribute("empleado", empleadoService.obtenerMaxIdEmpleado());
+        return "empleado/listOneView";
+    }
+    
+    
     @GetMapping("/findByName")
     public String showFindByName() {
-        return "listView";
+        return "empleado/listView";
     }
 
     @PostMapping("/findByName")
@@ -170,7 +191,7 @@ public class EmpleadoController {
         // del formulario
         model.addAttribute("nombre", busqueda);
 
-        return "listView";
+        return "empleado/listView";
     }
 
     // BÚSQUEDA POR GÉNERO
@@ -182,7 +203,7 @@ public class EmpleadoController {
         model.addAttribute("listaEmpleados", empleadoService.buscarPorGenero(genero));
             //Pasamos a la vista la opción seleccionada
         model.addAttribute("generoSeleccionado", genero);
-        return "listView";
+        return "empleado/listView";
     }
 
 }

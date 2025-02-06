@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  
+  <!-- Header con fragmentación -->
+  <head th:insert="fragments/header :: header"></head>
+
+  <!-- Menu con fragmentación -->
+  <nav th:insert="fragments/header :: menu"></nav>
+
+  <body class="container mt-5">
+    <h1 class="mb-4">Editar departamento</h1>
+
+    <form
+      method="post"
+      action="#"
+      th:action="@{/depto/edit/submit}"
+      th:object="${departamentoForm}"
+      class="card p-4 shadow"
+    >
+      <div class="mb-3">
+        <label for="id" class="form-label">Id:</label>
+        <input
+          type="text"
+          readonly
+          id="id"
+          th:field="*{id}"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre:</label>
+        <input
+          type="text"
+          id="nombre"
+          th:field="*{nombre}"
+          class="form-control"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+    <br />
+    <div th:if="${text2Err != null}">
+      <p th:text="${text2Err}">Texto de error</p>
+    </div>
+    <a th:href="@{/}" class="btn btn-secondary ms-2">Inicio</a>
+  </body>
+</html>

@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+  <!-- Header con fragmentación -->
+  <head th:insert="fragments/header :: header"></head>
 
-    <title>Tarea 6 - Mercedes Amor</title>
-</head>
+  <!-- Menu con fragmentación -->
+  <nav th:insert="fragments/header :: menu"></nav>
+
 <body class="card-body">
     <div class="container mt-5">
         <h1 class="mb-4">Vista Empleado</h1>
@@ -28,6 +26,10 @@
                 <tr>
                     <td>Nombre</td>
                     <td th:text="${empleado.nombre}">nombre</td>
+                </tr>
+                <tr>
+                    <td>Departamento</td>
+                    <td th:text="${empleado.departamento.nombre}">departamento</td>
                 </tr>
                 <tr>
                     <td>Salario</td>

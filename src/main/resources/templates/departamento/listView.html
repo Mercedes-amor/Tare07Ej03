@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+  <!-- Header con fragmentación -->
+  <head th:insert="fragments/header :: header"></head>
+
+  <!-- Menu con fragmentación -->
+  <nav th:insert="fragments/header :: menu"></nav>
+  
+  <body class="card-body">
+    <h1>Lista de Departamentos</h1>
+    <br />
+
+    <!-- TABLA DEPARTAMENTOS -->
+    <table class="table table-success table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Editar</th>
+          <th>Borrar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="dep : ${listaDepartamentos}">
+          <td th:text="${dep.id}">Id</td>
+          <td th:text="${dep.nombre}">Nombre</td>
+          <td>
+            <a
+              class="btn btn-primary"
+              th:href="@{/depto/edit/{id}(id=${dep.id})}"
+              >Editar</a
+            >
+          </td>
+          <td>
+            <a
+              class="btn btn-danger"
+              th:href="@{/depto/borrar/{id}(id=${dep.id})}"
+              >Borrar</a
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p th:if="${msg!=null}">Error: <span th:text="${msg}">err</span></p>
+
+    <a class="btn btn-warning" th:href="@{/depto/add}">Nuevo departamento</a>
+    <br />
+    <div th:if="${txtErr != null}" class="alert alert-warning">
+      <p th:text="${txtErr}">Texto de error</p>
+    </div>
+
+  </body>
+</html>
