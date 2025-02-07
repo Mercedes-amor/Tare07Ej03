@@ -3,15 +3,22 @@ package com.example.app.domain;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
@@ -27,6 +34,13 @@ public class Departamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Genera automáticamente el id autoincrementando
     private Long id;
     @NotNull
+    @Column(unique = true) //evita duplicados a nivel base de datos
     private String nombre;
-    
+    @NotNull
+    private float presupuestoAnual;
+
+    @ToString.Exclude //Para evitar el bucle 
+    //Ponemos MERGE en vez de ALL, para que persistan los empleados de un departamento cuando lo editamos
+    @OneToMany(cascade =  CascadeType.MERGE, mappedBy = "departamento", orphanRemoval = true)
+    private List<Empleado> empleados = new ArrayList<>();
 }

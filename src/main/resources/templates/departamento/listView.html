@@ -17,6 +17,7 @@
         <tr>
           <th>ID</th>
           <th>Nombre</th>
+          <th>Presupuesto Anual</th>
           <th>Editar</th>
           <th>Borrar</th>
         </tr>
@@ -25,6 +26,7 @@
         <tr th:each="dep : ${listaDepartamentos}">
           <td th:text="${dep.id}">Id</td>
           <td th:text="${dep.nombre}">Nombre</td>
+          <td th:text="${dep.presupuestoAnual} + €">Presupuesto</td>
           <td>
             <a
               class="btn btn-primary"

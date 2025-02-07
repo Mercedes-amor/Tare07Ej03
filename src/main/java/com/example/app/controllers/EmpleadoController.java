@@ -45,6 +45,8 @@ public class EmpleadoController {
         txtErr = null;
 
         model.addAttribute("listaEmpleados", empleadoService.obtenerTodos());
+        model.addAttribute("listaDepartamentos", departamentoService.obtenerTodos());
+        model.addAttribute("deptoSeleccionado", 0); // new Departamento(0L, "Todos"));
         return "empleado/listView";
 
     }
@@ -155,7 +157,7 @@ public class EmpleadoController {
         return "redirect:/list";
     }
 
-    // BUSCADOR
+    // BUSCADORES
 
     @GetMapping("/bysalary/{salario}")
     public String geBySalary(@PathVariable Float salario, Model model) {
@@ -170,8 +172,7 @@ public class EmpleadoController {
         model.addAttribute("empleado", empleadoService.obtenerMaxIdEmpleado());
         return "empleado/listOneView";
     }
-    
-    
+
     @GetMapping("/findByName")
     public String showFindByName() {
         return "empleado/listView";
@@ -197,12 +198,28 @@ public class EmpleadoController {
     // BÚSQUEDA POR GÉNERO
     @GetMapping("/findByGenero/{genero}")
     public String showFindByGenero(
-        @PathVariable Genero genero, 
-        Model model) {
-            //Llamamos a la función buscarPorGénero y mostramos el resultado
+            @PathVariable Genero genero,
+            Model model) {
+        // Llamamos a la función buscarPorGénero y mostramos el resultado
         model.addAttribute("listaEmpleados", empleadoService.buscarPorGenero(genero));
-            //Pasamos a la vista la opción seleccionada
+        // Pasamos a la vista la opción seleccionada
         model.addAttribute("generoSeleccionado", genero);
+        return "empleado/listView";
+    }
+
+    // BÚSQUEDA POR DEPARTAMENTO
+    @GetMapping("/porDepto/{idDepto}")
+    public String showFindByDepto(
+            @PathVariable Long idDepto,
+            Model model) {
+        // Llamamos a la función buscarPorDepartamento y mostramos el resultado
+        model.addAttribute("listaEmpleados", empleadoService.buscarPorDepartamento(idDepto));
+        
+        // Volvemos a pasar la lista de los departamentos para que se cargen nuevamente
+        model.addAttribute("listaDepartamentos", departamentoService.obtenerTodos());
+        // Pasamos a la vista la opción seleccionada
+        model.addAttribute("deptoSeleccionado", idDepto);
+
         return "empleado/listView";
     }
 

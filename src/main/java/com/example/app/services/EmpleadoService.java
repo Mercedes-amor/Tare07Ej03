@@ -31,4 +31,6 @@ public interface EmpleadoService {
    List <Empleado> obtenerPorDepartamento (Departamento departamento);
    List <Empleado> obtenerPorDepartamentoId (Long departamentoId);
 
+   public List<Empleado> buscarPorDepartamento(Long idDepto);
+
 }

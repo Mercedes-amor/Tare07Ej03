@@ -22,8 +22,7 @@ public interface EmpleadoRepository extends JpaRepository <Empleado, Long>{
 
    List<Empleado> findByDepartamento(Departamento departamento);
    List<Empleado> findByDepartamentoId(Long departamentoId);
-
-
+ 
    //Consulta que pide el Empleado que tenga el id más alto (el último)
    @Query ("select e from Empleado e where e.id=(select max(e2.id) from Empleado e2)")
     Empleado obtenerMaxIdEmpleado();
@@ -31,4 +30,7 @@ public interface EmpleadoRepository extends JpaRepository <Empleado, Long>{
     @Query("SELECT e FROM Empleado e WHERE e.salario >= :salario ORDER BY e.salario")
     List<Empleado> findEmpleadosConSalarioMayorIgual(@Param("salario") Float salario);
 
+    //Query para obtener la suma de los salarios de los empleados de un departamento
+    @Query("SELECT COALESCE(SUM(e.salario), 0) FROM Empleado e WHERE e.departamento.id = :departamentoId")
+    Float obtenerSumaSalarios(@Param("departamentoId") Long departamentoId);
 }
