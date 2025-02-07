@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+  <!-- Header con fragmentación -->
+  <head th:insert="~{fragments/header :: header}"></head>
+
+  <!-- Menu con fragmentación -->
+  <nav th:insert="~{fragments/header :: menu}"></nav>
+  
+  <body class="container mt-5">
+    <h1 class="mb-4">Nueva Nómina</h1>
+
+    <form
+      method="post"
+      th:action="@{/nomina/add/submit}"
+      th:object="${nominaForm}"
+      class="card p-4 shadow"
+    >
+      <div class="mb-3">
+        <label for="fechaNomina" class="form-label">fechaNomina:</label>
+        <input
+          type="date"
+          id="fechaNomina"
+          th:field="*{fechaNomina}"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="importeBruto" class="form-label">importe Bruto:</label>
+        <input
+          type="number"
+          id="importeBruto"
+          th:field="*{importeBruto}"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="porcentImpuestos" class="form-label">% impuestos:</label>
+        <input
+          type="number"
+          step="any"
+          id="porcentImpuestos"
+          th:field="*{porcentImpuestos}"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="importeNeto" class="form-label">importe Neto:</label>
+        <input
+          type="number"
+          id="importeNeto"
+          th:field="*{importeNeto}"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="empleado">Empleado</label>
+        <select th:field="*{empleado}">
+          <option
+            th:each="empleado:${listaEmpleados}"
+            th:value="${empleado.id}"
+            th:text="${empleado.nombre}"
+          ></option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+    <br />
+    <div th:if="${textErr != null}" class="alert alert-warning" role="alert">
+      <p th:text="${textErr}">Texto de error</p>
+    </div>
+    <a th:href="@{/}" class="btn btn-secondary ms-2">Inicio</a>
+  </body>
+</html>

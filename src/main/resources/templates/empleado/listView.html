@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
   <!-- Header con fragmentación -->
-  <head th:insert="fragments/header :: header"></head>
+  <head th:insert="~{fragments/header :: header}"></head>
 
   <!-- Menu con fragmentación -->
-  <nav th:insert="fragments/header :: menu"></nav>
+  <nav th:insert="~{fragments/header :: menu}"></nav>
 
   <body class="card-body">
     <h1>Listado de empleados</h1>
@@ -95,6 +95,7 @@
           <th>Nombre</th>
           <th>Departamento</th>
           <th>En Activo</th>
+          <th>Nominas</th>
           <th>Editar</th>
           <th>Borrar</th>
         </tr>
@@ -111,6 +112,12 @@
           </td>
           <td th:text="${empleado.departamento.nombre}">departamento</td>
           <td th:text="${empleado.enActivo}">bool</td>
+          <td>
+            <a
+              th:href="@{/nomina/porEmpleado/{idEmpleado}(idEmpleado=${empleado.id})}"           
+              >Ver nóminas</a
+            >
+          </td>
           <td>
             <a
               class="btn btn-primary"

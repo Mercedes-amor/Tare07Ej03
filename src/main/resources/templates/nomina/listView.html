@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+  <!-- Header con fragmentación -->
+  <head th:insert="~{fragments/header :: header}"></head>
+
+  <!-- Menu con fragmentación -->
+  <nav th:insert="~{fragments/header :: menu}"></nav>
+  
+  
+  <body class="card-body">
+    <h1>Lista nóminas</h1>
+    <br />
+
+    <!-- TABLA NÓMINAS -->
+     <h3 th:if="${nombreEmpleado != null}">Nóminas de <span th:text="${nombreEmpleado}"></span></h3>
+   
+    <table class="table table-success table-striped">
+      <thead>
+        <tr>
+          <th>ID_Nomina</th>
+          <th>Empleado</th>
+          <th>Fecha emisión</th>
+          <th>Importe Bruto</th>
+          <th>% Impuestos</th>
+          <th>Importe Neto</th>
+          <th>Borrar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="nom : ${listaNominas}">
+          <td th:text="${nom.id}">Id</td>
+          <td th:text="${nom.empleado.nombre}">Empleado</td>
+          <td th:text="${nom.fechaNomina}">Fecha</td>
+          <td th:text="${nom.importeBruto} + €">Importe bruto</td>
+          <td th:text="${nom.porcentImpuestos}">Porcentaje</td>
+          <td th:text="${nom.importeNeto} + €">Importe neto</td>
+
+          <td>
+            <a
+              class="btn btn-danger"
+              th:href="@{/nomina/borrar/{id}(id=${nom.id})}"
+              >Borrar</a
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p th:if="${msg!=null}">Error: <span th:text="${msg}">err</span></p>
+
+    <a class="btn btn-warning" th:href="@{/nomina/add}">Nueva nómina</a>
+    <br />
+    <div th:if="${txtNominasCargadas != null}" class="alert alert-info">
+      <p th:text="${txtNominasCargadas}">Texto carga correcta</p>
+    </div>
+    <div th:if="${txtErr != null}" class="alert alert-warning">
+      <p th:text="${txtErr}">Texto de error</p>
+    </div>
+
+  </body>
+</html>

@@ -2,10 +2,10 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
   
   <!-- Header con fragmentación -->
-  <head th:insert="fragments/header :: header"></head>
+  <head th:insert="~{fragments/header :: header}"></head>
 
   <!-- Menu con fragmentación -->
-  <nav th:insert="fragments/header :: menu"></nav>
+  <nav th:insert="~{fragments/header :: menu}"></nav>
 
   <body class="container mt-5">
     <h1 class="mb-4">Editar departamento</h1>

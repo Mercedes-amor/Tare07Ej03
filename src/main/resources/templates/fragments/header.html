@@ -18,6 +18,15 @@
         <li>
           <a class="nav-link active" th:href="@{/depto/}">Departamentos</a>
         </li>
+        <li></li>
+        <li>
+          <a class="nav-link active" th:href="@{/nomina/}">Nominas</a>
+        </li>
+        <li>
+          <form action="/nomina/cargar" method="get">
+            <button class="btn btn-warning" type="submit">Cargar Nóminas</button>
+        </form>
+        </li>
       </ul>
     </nav>
   </body>
