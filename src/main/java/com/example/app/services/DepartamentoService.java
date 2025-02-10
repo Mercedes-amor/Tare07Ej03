@@ -12,13 +12,13 @@ import com.example.app.repositories.DepartamentoRepository;
 public class DepartamentoService {
 
     @Autowired
-    DepartamentoRepository DepartamentoRepository;
+    DepartamentoRepository departamentoRepository;
 
     public List<Departamento> obtenerTodos() {
 
         // Utilizamos el método del repositorio llamado findAll
         // Podríamos usar un sort para ordenar las entradas por un campo
-        return DepartamentoRepository.findAll();
+        return departamentoRepository.findAll();
     }
 
     public Departamento obtenerPorId(Long id) {
@@ -26,27 +26,27 @@ public class DepartamentoService {
         // otra clase para evitar nulos) con lo que hay que ajustarlo
 
         // Lo más correcto, devolver una excepción
-        return DepartamentoRepository.findById(id)
+        return departamentoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Departamento no encontrado"));
     }
 
     public Departamento add(Departamento Departamento) {
 
-        return DepartamentoRepository.save(Departamento); // .save ya nos devuelve un Departamento
+        return departamentoRepository.save(Departamento); // .save ya nos devuelve un Departamento
     }
 
     public Departamento actualizar(Departamento Departamento) {
 
-        return DepartamentoRepository.save(Departamento);
+        return departamentoRepository.save(Departamento);
     }
 
     public void eliminarPorId(Long id) {
         // Ya tiene un método propio para borrar por id
-        DepartamentoRepository.deleteById(id);
+        departamentoRepository.deleteById(id);
     }
 
     public void eliminar(Departamento Departamento) {
-        DepartamentoRepository.delete(Departamento);
+        departamentoRepository.delete(Departamento);
     }
 
 }

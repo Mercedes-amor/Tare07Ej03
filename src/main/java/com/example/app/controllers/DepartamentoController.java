@@ -103,21 +103,21 @@ public class DepartamentoController {
             // Reseteamos la variable
             txtErr = null;
         }
-        Departamento Departamento = departamentoService.obtenerPorId(id);
-        model.addAttribute("departamentoForm", Departamento);
+        Departamento departamento = departamentoService.obtenerPorId(id);
+        model.addAttribute("departamentoForm", departamento);
         return "departamento/editFormView";
     }
 
     @PostMapping("/edit/submit")
     public String getEditSubmit(
-            @Valid Departamento DepartamentoForm,
+            @Valid Departamento departamentoForm,
             BindingResult bindingResult) {
         // Para los errores que llegan por el @Valid
         if (bindingResult.hasErrors()) {
             return "redirect:/depto/edit/submit?err=1";
         }
         try {
-            departamentoService.actualizar(DepartamentoForm);
+            departamentoService.actualizar(departamentoForm);
         } catch (RuntimeException e) {
             // Capturamos las excepciones que llegan del service
             txtErr = e.getMessage();
